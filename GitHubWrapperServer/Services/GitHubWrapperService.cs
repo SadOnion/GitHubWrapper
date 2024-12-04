@@ -19,16 +19,13 @@ namespace GitHubWrapperServer.Services
 
         public override async Task<RepoResp> SearchRepos(RepoReq request, ServerCallContext context)
         {
-
             var response = await ExecuteSearchRequestAsync(request.Query);
-
 
             if (response.IsSuccessful)
             {
                 try
                 {
-                    using var document = JsonDocument.Parse(response.Content ?? string.Empty);
-                    return GetRepoRespFromJson(document);
+                    return GetRepoRespFromResponse(response);
                 }
                 catch (Exception e)
                 {
@@ -53,9 +50,11 @@ namespace GitHubWrapperServer.Services
             return await restClient.ExecuteAsync(request);
         }
 
-        private RepoResp GetRepoRespFromJson(JsonDocument jsonDocument)
+        private RepoResp GetRepoRespFromResponse(RestResponse response)
         {
-            var root = jsonDocument.RootElement;
+            using var document = JsonDocument.Parse(response.Content ?? string.Empty);
+
+            var root = document.RootElement;
 
             var repoResponse = new RepoResp()
             {
@@ -70,4 +69,5 @@ namespace GitHubWrapperServer.Services
             return repoResponse;
         }
     }
+
 }
