@@ -19,8 +19,8 @@ This project implements a gRPC service that wraps GitHub's REST API to search fo
 ### Clone the repository
 
 ```bash
-git clone https://github.com/sadonion/github-wrapper-service.git
-cd github-wrapper-service
+git clone https://github.com/SadOnion/GitHubWrapper
+cd GitHubWrapper
 ```
 
 ### Configure GitHub API Token
@@ -54,7 +54,7 @@ To start the server, run the following command:
 dotnet run
 ```
 
-By default, the gRPC server will run on `https://localhost:5001`. You can change this in the `appsettings.json` file or in the server code.
+By default, the gRPC server will run on `https://localhost:5207`. You can change this in the `launchSettings.json` file.
 
 ## Using the gRPC Service
 
@@ -72,7 +72,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var serverAddress = "https://localhost:5001"; // Address of the running gRPC server
+        var serverAddress = "https://localhost:5207"; // Address of the running gRPC server
 
         using var channel = GrpcChannel.ForAddress(serverAddress);
         var client = new GithubWrapperClient(channel);
@@ -93,10 +93,6 @@ class Program
 ```
 
 Make sure to update the `serverAddress` with the correct URL for your gRPC server.
-
-## Contributing
-
-Feel free to fork the repository, create a branch, and submit pull requests. If you have any ideas or find any issues, please create an issue on GitHub.
 
 ## License
 
